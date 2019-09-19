@@ -1,0 +1,54 @@
+#! C:/Program Files/Nuke11.3v4/nuke-11.3.4.dll -nx
+version 11.3 v4
+Gizmo {
+ addUserKnob {20 User l getShotgunData}
+ addUserKnob {1 source_node l "Source Node"}
+ source_node src_read
+ addUserKnob {26 ""}
+ addUserKnob {22 update l Update T "#import sg_connection\ngetShotgunData.update()" +STARTLINE}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 project_div l "Project Data"}
+ addUserKnob {1 project l "Project:"}
+ addUserKnob {1 tank_name l "  Tank name:" -STARTLINE}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 project_div l "Shot Data"}
+ addUserKnob {1 episode l "Episode:"}
+ addUserKnob {1 sequence l "     Sequence:" -STARTLINE}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 project_div l "Asset Data"}
+ addUserKnob {1 asset_type l "Asset Type:"}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 project_div l "Entity Data"}
+ addUserKnob {1 entity_type l "Entity type:"}
+ addUserKnob {1 entity_name l "    Name:" -STARTLINE}
+ addUserKnob {1 sg_entity_status_list l "    Status:" -STARTLINE}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 project_div l "Version Data"}
+ addUserKnob {1 version_name l "Version name:"}
+ addUserKnob {1 sg_editorial_status l "Editorial Status:"}
+ addUserKnob {1 sg_version_status_list l "Version Status:"}
+ addUserKnob {1 client_version_name l "Client Version name:"}
+ addUserKnob {1 sg_tech_check_approved l "Tech Check Approved:"}
+ addUserKnob {1 sg_tech_check_notes l "Tech Check Notes:"}
+ addUserKnob {1 step l "Step:"}
+ addUserKnob {1 artist l "            Artist:" -STARTLINE}
+ addUserKnob {1 head_in l "Head in:"}
+ addUserKnob {1 tail_out l "         Tail out:" -STARTLINE}
+ addUserKnob {1 head_handle l "Head handles:"}
+ addUserKnob {1 tail_handle l "  Tail handles:" -STARTLINE}
+ addUserKnob {1 cut_in l "Cut in:"}
+ addUserKnob {1 cut_out l "         Cut out:" -STARTLINE}
+ addUserKnob {1 description l "Artist notes:"}
+ addUserKnob {1 slate_notes l "Slate notes:"}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 0
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos 300
+ }
+end_group
