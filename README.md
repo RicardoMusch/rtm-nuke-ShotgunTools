@@ -1,6 +1,6 @@
 # nuke-getShotgunData
 
-![Screenshot](screenshots/scr1.jpg)
+![Screenshot](screenshots/scr1.JPG)
 
 
 # Installation
