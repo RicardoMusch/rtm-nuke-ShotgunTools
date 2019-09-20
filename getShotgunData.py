@@ -64,20 +64,19 @@ def update():
 
 
     "Filename to search Shotgun with"
-    searchString_original = read["file"].getValue()
+    searchString_backwards = read["file"].getValue().replace("/","\\")
     searchString_forwards = read["file"].getValue().replace("\\","/")
     print "Searching Shotgun for data with search string:\n"+searchString_forwards+"\n"
 
 
     print "\nSearching Shotgun for version data"
-    fields = [ "code", "sg_status_list", "client_code", "entity", "sg_slate_notes", "project", "user", "description", "sg_version_type", "sg_tech_check_notes", "sg_tech_check_approved", "sg_editorial_status" ]
+    fields = [ "code", "sg_status_list", "client_code", "entity", "sg_slate_notes", "project", "user", "created_at", "description", "sg_version_type", "sg_tech_check_notes", "sg_tech_check_approved", "sg_editorial_status" ]
     filters = [ ["sg_path_to_frames", "contains", searchString_forwards] ]
     version_data = sg.find_one('Version', filters, fields)
     #print version_data
 
     if version_data == None:
-        fields = [ "code", "sg_status_list", "client_code", "entity", "sg_slate_notes", "project", "user", "description", "sg_version_type", "sg_tech_check_notes", "sg_tech_check_approved", "sg_editorial_status" ]
-        filters = [ ["sg_path_to_frames", "contains", searchString_original] ]
+        filters = [ ["sg_path_to_frames", "contains", searchString_backwards] ]
         version_data = sg.find_one('Version', filters, fields)
         #print version_data
 
@@ -139,6 +138,13 @@ def update():
         field = "user"
         n[field].setValue("")
         n[field].setValue(version_data.get(field).get("name"))
+    except Exception as e:
+        print field
+        print e
+    try:
+        field = "created_at"
+        n[field].setValue("")
+        n[field].setValue(str(version_data.get(field)))
     except Exception as e:
         print field
         print e
