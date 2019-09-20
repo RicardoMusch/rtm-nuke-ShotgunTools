@@ -5,13 +5,6 @@ def update():
     import os
     import sys
 
-    try:
-        sys.path.append(os.environ["SHOTGUN_API3"])
-    except Exception as e:
-        sys.path.append("F:/Archive/common_studio/Shotgun/_api/python-api")
-    import shotgun_api3
-
-
 
     ########################################################################################################
     print "Connecting to Shotgun"
@@ -25,6 +18,8 @@ def update():
         print "Connected to Shotgun via current SGTK engine...\n"
     except:
         import sg_connection
+        sys.path.append(os.environ["SHOTGUN_API3"])
+        import shotgun_api3
         # Connect to SG
         sg = shotgun_api3.Shotgun(os.environ["SERVER_PATH"], os.environ["SCRIPT_NAME"], os.environ["SCRIPT_KEY"])
         print "Connected to Shotgun via api...\n"
