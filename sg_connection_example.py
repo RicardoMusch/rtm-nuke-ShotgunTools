@@ -3,6 +3,6 @@
 "Fill in the data below and rename this file sg_connection.py"
 #############################################################
 
-SERVER_PATH = "https://YOURSTUDIO.shotgunstudio.com"
-SCRIPT_NAME = 'YOUR_SCRIPT_NAME'
-SCRIPT_KEY = 'XYXYXYXYXYYXYXYXYXYXYX'
+os.environ["SERVER_PATH"] = "https://YOURSTUDIO.shotgunstudio.com"
+os.environ["SCRIPT_NAME"] = 'YOUR_SCRIPT_NAME'
+os.environ["SCRIPT_KEY"] = 'XYXYXYXYXYYXYXYXYXYXYX'

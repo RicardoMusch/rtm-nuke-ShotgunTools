@@ -26,7 +26,7 @@ def update():
     except:
         import sg_connection
         # Connect to SG
-        # sg = shotgun_api3.Shotgun(SERVER_PATH, SCRIPT_NAME, SCRIPT_KEY)
+        sg = shotgun_api3.Shotgun(os.environ["SERVER_PATH"], os.environ["SCRIPT_NAME"], os.environ["SCRIPT_KEY"])
         print "Connected to Shotgun...\n"
 
 
