@@ -22,12 +22,12 @@ def update():
         current_engine = sgtk.platform.current_engine()
         # get hold of the shotgun api instance used by the engine, (or we could have created a new one)
         sg = current_engine.shotgun
-        print "Connected to Shotgun...\n"
+        print "Connected to Shotgun via current SGTK engine...\n"
     except:
         import sg_connection
         # Connect to SG
         sg = shotgun_api3.Shotgun(os.environ["SERVER_PATH"], os.environ["SCRIPT_NAME"], os.environ["SCRIPT_KEY"])
-        print "Connected to Shotgun...\n"
+        print "Connected to Shotgun via api...\n"
 
 
     ########################################################################################################
