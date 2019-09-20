@@ -1,5 +1,3 @@
-#! C:/Program Files/Nuke11.3v4/nuke-11.3.4.dll -nx
-version 11.3 v4
 Gizmo {
  addUserKnob {20 User l getShotgunData}
  addUserKnob {1 source_node l "Source Node"}
@@ -10,13 +8,21 @@ Gizmo {
  addUserKnob {26 project_div l "Project Data"}
  addUserKnob {1 project l "Project:"}
  addUserKnob {1 tank_name l "  Tank name:" -STARTLINE}
+ addUserKnob {1 project_fps l "  FPS:" -STARTLINE}
  addUserKnob {26 "" +STARTLINE}
  addUserKnob {26 project_div l "Shot Data"}
- addUserKnob {1 episode l "Episode:"}
- addUserKnob {1 sequence l "     Sequence:" -STARTLINE}
+ addUserKnob {1 sg_episode l "Episode:"}
+ addUserKnob {1 sg_sequence l "     Sequence:" -STARTLINE}
+ addUserKnob {26 project_div l "Cut info"}
+ addUserKnob {1 sg_head_in l "Head in:"}
+ addUserKnob {1 sg_tail_out l "         Tail out:" -STARTLINE}
+ addUserKnob {1 sg_head_handle l "Head handles:"}
+ addUserKnob {1 sg_tail_handle l "  Tail handles:" -STARTLINE}
+ addUserKnob {1 sg_cut_in l "Cut in:"}
+ addUserKnob {1 sg_cut_out l "         Cut out:" -STARTLINE}
  addUserKnob {26 "" +STARTLINE}
  addUserKnob {26 project_div l "Asset Data"}
- addUserKnob {1 asset_type l "Asset Type:"}
+ addUserKnob {1 sg_asset_type l "Asset Type:"}
  addUserKnob {26 "" +STARTLINE}
  addUserKnob {26 project_div l "Entity Data"}
  addUserKnob {1 entity_type l "Entity type:"}
@@ -25,21 +31,20 @@ Gizmo {
  addUserKnob {26 "" +STARTLINE}
  addUserKnob {26 project_div l "Version Data"}
  addUserKnob {1 version_name l "Version name:"}
+ addUserKnob {1 client_code l "Client Version name:"}
+ addUserKnob {1 step l "Step:"}
+ addUserKnob {1 user l "    Artist:" -STARTLINE}
+ addUserKnob {1 sg_version_type l "    Type:" -STARTLINE} 
  addUserKnob {1 sg_editorial_status l "Editorial Status:"}
  addUserKnob {1 sg_version_status_list l "Version Status:"}
- addUserKnob {1 client_version_name l "Client Version name:"}
  addUserKnob {1 sg_tech_check_approved l "Tech Check Approved:"}
  addUserKnob {1 sg_tech_check_notes l "Tech Check Notes:"}
- addUserKnob {1 step l "Step:"}
- addUserKnob {1 artist l "            Artist:" -STARTLINE}
- addUserKnob {1 head_in l "Head in:"}
- addUserKnob {1 tail_out l "         Tail out:" -STARTLINE}
- addUserKnob {1 head_handle l "Head handles:"}
- addUserKnob {1 tail_handle l "  Tail handles:" -STARTLINE}
- addUserKnob {1 cut_in l "Cut in:"}
- addUserKnob {1 cut_out l "         Cut out:" -STARTLINE}
  addUserKnob {1 description l "Artist notes:"}
- addUserKnob {1 slate_notes l "Slate notes:"}
+ addUserKnob {1 sg_slate_notes l "Slate notes:"}
+ addUserKnob {26 project_div l ""}
+ addUserKnob {26 footer1 l "Version:" T "v1.0 - September 2019"}
+ addUserKnob {26 footer2 l "Created by:" T "Ricardo Musch"}
+ addUserKnob {26 footer2 l "Website:" T "www.ricardo-musch.com"}
 }
  Input {
   inputs 0

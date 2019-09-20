@@ -34,10 +34,7 @@ def update():
     print "Loading Functions"
     def getSGStatusFriendlyName(status_short_code):
         fields = ["name"]
-        filters = [
-        ['code', 'is', status_short_code ],
-        #["id", "is", version_data.get("entity").get("id")]
-        ]
+        filters = [ ['code', 'is', status_short_code ] ]
         friendly_status = sg.find_one("Status", filters, fields)
         #print friendly_status
         return friendly_status.get("name")
@@ -50,172 +47,273 @@ def update():
         print e
         n = nuke.thisNode()
 
+
+    "Making sure we are connected to a node with a file knob"
     try:
         try:
             "Get Upstream Node"
             read = nuke.toNode(n.input(0)["name"].getValue())
         except:
+            "Get Node from Knob"
             read = nuke.toNode(n["source_node"].getValue())
         print "Using Read:"+str(read["name"].getValue())
+        print "File knob: "+read["file"].getValue()
     except:
         nuke.message("Please connect to a node with a file knob or add the name in the input knob!")
         return
 
 
     "Filename to search Shotgun with"
-    filename = os.path.basename(read["file"].getValue())
+    searchString_original = read["file"].getValue()
+    searchString_forwards = read["file"].getValue().replace("\\","/")
+    print "Searching Shotgun for data with search string:\n"+searchString_forwards+"\n"
 
-    print "Searching Shotgun for version data"
+
+    print "\nSearching Shotgun for version data"
     fields = [ "code", "sg_status_list", "client_code", "entity", "sg_slate_notes", "project", "user", "description", "sg_version_type", "sg_tech_check_notes", "sg_tech_check_approved", "sg_editorial_status" ]
-    filters = [ ["sg_path_to_frames", "contains", filename] ]
+    filters = [ ["sg_path_to_frames", "contains", searchString_forwards] ]
     version_data = sg.find_one('Version', filters, fields)
     #print version_data
 
+    if version_data == None:
+        fields = [ "code", "sg_status_list", "client_code", "entity", "sg_slate_notes", "project", "user", "description", "sg_version_type", "sg_tech_check_notes", "sg_tech_check_approved", "sg_editorial_status" ]
+        filters = [ ["sg_path_to_frames", "contains", searchString_original] ]
+        version_data = sg.find_one('Version', filters, fields)
+        #print version_data
 
-    print "Searching Shotgun for entity data "
-    fields = ["sg_status_list", "sg_head_in", "sg_tail_out", "sg_head_handle", "sg_tail_handle", "sg_cut_in", "sg_cut_out", "tank_name", "sg_sequence", "sg_episode"]
-    filters = [
-    #['project', 'name_contains', project],
-    ["id", "is", version_data.get("entity").get("id")]
-    ]
+
+    print "\nSearching Shotgun for entity data "
+    fields = ["sg_asset_type", "sg_status_list", "sg_head_in", "sg_tail_out", "sg_head_handle", "sg_tail_handle", "sg_cut_in", "sg_cut_out", "tank_name", "sg_sequence", "sg_episode"]
+    filters = [ ["id", "is", version_data.get("entity").get("id")] ]
     entity_data = sg.find_one(version_data.get("entity").get("type"), filters, fields)
     #print entity_data
 
     
-    print "Searching Shotgun for project data "
+    print "\nSearching Shotgun for project data "
     fields = ["tank_name", "sg_fps"]
-    filters = [
-    ['name', 'contains', version_data.get("project").get("name")],
-    #["id", "is", version_data.get("entity").get("id")]
-    ]
+    filters = [ ['name', 'contains', version_data.get("project").get("name")] ]
     project_data = sg.find_one("Project", filters, fields)
     #print project_data
 
 
     #############################################################################
-    "Processing Project data"
+    print "\nProcessing Project data"
     try:
-        n["tank_name"].setValue(project_data.get("tank_name"))
+        field = "tank_name"
+        n[field].setValue("")
+        n[field].setValue(project_data.get(field))
     except Exception as e:
+        print field
         print e
     try:
-        n["project_fps"].setValue(project_data.get("sg_fps"))
+        n["project_fps"].setValue("")
+        n["project_fps"].setValue(str(project_data.get("sg_fps")))
     except Exception as e:
+        print "project_fps"
         print e
 
 
     #############################################################################
-    print "Processing Version data"
+    print "\nProcessing Version data"
     try:
-        n["project"].setValue(version_data.get("project").get("name"))
+        field = "project"
+        n[field].setValue("")
+        n[field].setValue(version_data.get(field).get("name"))
     except Exception as e:
+        print field
         print e
     try:
+        n["version_name"].setValue("")
         n["version_name"].setValue(version_data.get("code"))
     except Exception as e:
+        print "version_name"
         print e
     try:
-        n["client_version_name"].setValue(version_data.get("client_code"))
+        field = "client_code"
+        n[field].setValue("")
+        n[field].setValue(version_data.get(field))
     except Exception as e:
+        print field
         print e
     try:
-        n["artist"].setValue(version_data.get("user").get("name"))
+        field = "user"
+        n[field].setValue("")
+        n[field].setValue(version_data.get(field).get("name"))
     except Exception as e:
+        print field
         print e
     try:
         n["entity_type"].setValue(version_data.get("entity").get("type"))
     except Exception as e:
+        print "entity_type"
         print e
     try:
         entity_name = version_data.get("entity").get("name")
+        n["entity_name"].setValue("")
         n["entity_name"].setValue(entity_name)
     except Exception as e:
+        print "entity_name"
         print e
     try:
         field = "description"
+        n[field].setValue("")
         n[field].setValue(version_data.get(field))
     except Exception as e:
+        print field
         print e
     try:
-        n["slate_notes"].setValue(version_data.get("sg_slate_notes"))
+        field = "sg_slate_notes"
+        n[field].setValue("")
+        n[field].setValue(version_data.get(field))
     except Exception as e:
+        print field
         print e
     try:
-        n["version_type"].setValue(version_data.get("sg_version_type"))
+        field = "sg_version_type"
+        n[field].setValue("")
+        n[field].setValue(version_data.get(field))
     except Exception as e:
+        print field
         print e
     try:
         field = "sg_tech_check_notes"
+        n[field].setValue("")
         n[field].setValue(version_data.get(field))
     except Exception as e:
+        print field
         print e
     try:
         field = "sg_tech_check_approved"
+        n[field].setValue("")
         n[field].setValue(version_data.get(field))
     except Exception as e:
+        print field
         print e
     try:
         field = "sg_editorial_status"
+        n[field].setValue("")
         n[field].setValue(version_data.get(field))
     except Exception as e:
+        print field
         print e
     try:
         field = "sg_status_list"
         status = getSGStatusFriendlyName(version_data.get(field))
+        n["sg_version_status_list"].setValue("")
         n["sg_version_status_list"].setValue(status)
     except Exception as e:
+        print field
         print e
 
 
     #############################################################################
-    print "Processing Entity data"
+    print "\nProcessing Entity data"
     try:
-        n["episode"].setValue(entity_data.get("sg_episode").get("name"))
+        field = "sg_asset_type"
+        n[field].setValue("")
+        n[field].setValue(entity_data.get(field))
     except Exception as e:
+        print field
+        print e    
+    try:
+        field = "sg_episode"
+        n[field].setValue("")
+        n[field].setValue(entity_data.get(field).get("name"))
+    except Exception as e:
+        print field
         print e
     try:
-        n["sequence"].setValue(entity_data.get("sg_sequence").get("name"))
+        field = "sg_sequence"
+        n[field].setValue("")
+        n[field].setValue(entity_data.get(field).get("name"))
     except Exception as e:
+        print field
         print e
     try:
-        n["head_in"].setValue(str(entity_data.get("sg_head_in")))
+        field = "sg_head_in"
+        n[field].setValue("")
+        value = str(entity_data.get(field))
+        if value == "None":
+            value = "0"
+        n[field].setValue(str(value))
     except Exception as e:
+        print field
         print e
     try:
-        n["tail_out"].setValue(str(entity_data.get("sg_tail_out")))
+        field = "sg_tail_out"
+        n[field].setValue("")
+        value = str(entity_data.get(field))
+        if value == "None":
+            value = "0"
+        n[field].setValue(str(value))
     except Exception as e:
+        print field
         print e
     try:
-        n["head_handle"].setValue(str(entity_data.get("sg_head_handle")))
+        field = "sg_head_handle"
+        n[field].setValue("")
+        value = str(entity_data.get(field))
+        if value == "None":
+            value = "0"
+        n[field].setValue(str(value))
     except Exception as e:
+        print field
         print e
     try:
-        n["tail_handle"].setValue(str(entity_data.get("sg_tail_handle")))
+        field = "sg_tail_handle"
+        n[field].setValue("")
+        value = str(entity_data.get(field))
+        if value == "None":
+            value = "0"
+        n[field].setValue(str(value))
     except Exception as e:
+        print field
         print e
     try:
-        n["cut_in"].setValue(str(entity_data.get("sg_cut_in")))
+        field = "sg_cut_in"
+        n[field].setValue("")
+        value = str(entity_data.get(field))
+        if value == "None":
+            value = "0"
+        n[field].setValue(str(value))
     except Exception as e:
+        print field
         print e
     try:
-        n["cut_out"].setValue(str(entity_data.get("sg_cut_out")))
+        field = "sg_cut_out"
+        n[field].setValue("")
+        value = str(entity_data.get(field))
+        if value == "None":
+            value = "0"
+        n[field].setValue(str(value))
     except Exception as e:
+        print field
         print e
     try:
         field = "sg_status_list"
+        n["sg_entity_status_list"].setValue("")
         friendly_status = getSGStatusFriendlyName(entity_data.get(field))
         n["sg_entity_status_list"].setValue(friendly_status)
     except Exception as e:
+        print field
         print e
 
 
 
     #############################################################################
-    print "Finding Step"
+    print "\nFinding Step"
     try:
-        step = read["file"].getValue().replace("\\","/").lower()
-        step = step.split(entity_name.lower())[1]
-        step = step.split("/")[1]
-        n["step"].setValue(step)
+        n["step"].setValue("")
+        try:
+            step = read["file"].getValue().replace("\\","/").lower()
+            step = step.split(entity_name.lower())[1]
+            step = step.split("/")[1]
+            n["step"].setValue(step)
+        except:
+            step = read["file"].getValue().replace("\\","/").lower()
+            step = step.split("/publish")[0]
+            step = step.split("/")[-1]
+            n["step"].setValue(step)
     except Exception as e:
+        print "step"
         print e
