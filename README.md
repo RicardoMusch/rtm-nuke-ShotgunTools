@@ -1,5 +1,7 @@
 # nuke-getShotgunData
 
+https://github.com/RicardoMusch/nuke-getShotgunData/blob/master/screenshots/scr1.JPG?raw=true
+
 
 # Installation
 ## Install (easy - but not flexible)
