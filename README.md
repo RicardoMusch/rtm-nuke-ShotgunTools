@@ -1,2 +1,2 @@
-# nuke-getShotgunData_github
+# nuke-getShotgunData
  
