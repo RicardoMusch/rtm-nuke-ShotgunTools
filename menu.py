@@ -1,9 +1,7 @@
-######################################
+##########################################
 print " "
-print "Loading getShotgunData gizmo"
-######################################
-
-import getShotgunData
+print "Loading getShotgunData gizmo Menu"
+##########################################
 
 toolbar = nuke.toolbar("Nodes")
 #toolbar.addCommand( "Shotgun/NukeTools", "nuke.createNode('MyGizmo')")

@@ -3,7 +3,7 @@ Gizmo {
  addUserKnob {1 source_node l "Source Node"}
  source_node src_read
  addUserKnob {26 ""}
- addUserKnob {22 update l Update T "#import sg_connection\ngetShotgunData.update()" +STARTLINE}
+ addUserKnob {22 update l Update T "getShotgunData.update()" +STARTLINE}
  addUserKnob {26 "" +STARTLINE}
  addUserKnob {26 project_div l "Project Data"}
  addUserKnob {1 project l "Project:"}
