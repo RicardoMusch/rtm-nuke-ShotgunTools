@@ -35,12 +35,12 @@ def update():
         return friendly_status.get("name")
 
 
-    "Me"
+    "Run code on this node unless developing in the nuke script editor"
     try:
-        n = nuke.selectedNode()
-    except Exception as e:
-        print e
         n = nuke.thisNode()
+    except Exception as e:
+        #print e
+        n = nuke.selectedNode()
 
 
     "Making sure we are connected to a node with a file knob"
@@ -59,23 +59,38 @@ def update():
 
 
     "Filename to search Shotgun with"
-    searchString_backwards = read["file"].getValue().replace("/","\\")
-    searchString_forwards = read["file"].getValue().replace("\\","/")
+    searchString = read["file"].getValue()
+    if ".mov" in searchString:
+        shotgun_field = "sg_path_to_movie"
+    else:
+        shotgun_field = "sg_path_to_frames"
+    searchString_backwards = searchString.replace("/","\\")
+    searchString_forwards = searchString.replace("\\","/")
+
+
+    ##########################################
+    print "Primary Search"
+    ##########################################
     print "Searching Shotgun for data with search string:\n"+searchString_forwards+"\n"
-
-
-    print "\nSearching Shotgun for version data"
     fields = [ "code", "sg_status_list", "client_code", "entity", "sg_slate_notes", "project", "user", "created_at", "description", "sg_version_type", "sg_tech_check_notes", "sg_tech_check_approved", "sg_editorial_status" ]
-    filters = [ ["sg_path_to_frames", "contains", searchString_forwards] ]
+    filters = [ [shotgun_field, "contains", searchString_forwards] ]
     version_data = sg.find_one('Version', filters, fields)
     #print version_data
 
+    
     if version_data == None:
-        filters = [ ["sg_path_to_frames", "contains", searchString_backwards] ]
+        ##########################################
+        print "Secondary Search"
+        ##########################################
+        filters = [ [shotgun_field, "contains", searchString_backwards] ]
         version_data = sg.find_one('Version', filters, fields)
+        print "Searching Shotgun for data with search string:\n"+searchString_backwards+"\n"
         #print version_data
 
 
+    ##########################################
+    print "Searching for Entity Data"
+    ##########################################
     print "\nSearching Shotgun for entity data "
     fields = ["sg_asset_type", "sg_status_list", "sg_head_in", "sg_tail_out", "sg_head_handle", "sg_tail_handle", "sg_cut_in", "sg_cut_out", "tank_name", "sg_sequence", "sg_episode"]
     filters = [ ["id", "is", version_data.get("entity").get("id")] ]
@@ -83,6 +98,9 @@ def update():
     #print entity_data
 
     
+    ##########################################
+    print "Searching for Project Data"
+    ##########################################
     print "\nSearching Shotgun for project data "
     fields = ["tank_name", "sg_fps"]
     filters = [ ['name', 'contains', version_data.get("project").get("name")] ]
@@ -306,12 +324,12 @@ def update():
     try:
         n["step"].setValue("")
         try:
-            step = read["file"].getValue().replace("\\","/").lower()
+            step = searchString.replace("\\","/").lower()
             step = step.split(entity_name.lower())[1]
             step = step.split("/")[1]
             n["step"].setValue(step)
         except:
-            step = read["file"].getValue().replace("\\","/").lower()
+            step = searchString.replace("\\","/").lower()
             step = step.split("/publish")[0]
             step = step.split("/")[-1]
             n["step"].setValue(step)
