@@ -43,7 +43,7 @@ Gizmo {
  addUserKnob {1 description l "Artist notes:"}
  addUserKnob {1 sg_slate_notes l "Slate notes:"}
  addUserKnob {26 project_div l ""}
- addUserKnob {26 footer1 l "Version:" T "v1.0 - September 2019"}
+ addUserKnob {26 footer1 l "Version:" T "v1.1 - September 2019"}
  addUserKnob {26 footer2 l "        Created by:" T "Ricardo Musch" -STARTLINE}
  addUserKnob {22 psite l "ricardo-musch.com" T "import webbrowser as wb\nwb.open_new_tab('http://www.ricardo-musch.com')" +STARTLINE}
  addUserKnob {22 psite l "getShotgunData GitHub" T "import webbrowser as wb\nwb.open_new_tab('https://github.com/RicardoMusch/nuke-getShotgunData')" -STARTLINE}
