@@ -17,13 +17,17 @@ def update():
         sg = current_engine.shotgun
         print "Connected to Shotgun via current SGTK engine...\n"
     except:
-        import sg_connection
-        sys.path.append(os.environ["SHOTGUN_API3"])
-        import shotgun_api3
-        # Connect to SG
-        sg = shotgun_api3.Shotgun(os.environ["SERVER_PATH"], os.environ["SCRIPT_NAME"], os.environ["SCRIPT_KEY"])
-        print "Connected to Shotgun via api...\n"
-
+        try:
+            import sg_connection
+            sys.path.append(os.environ["SHOTGUN_API3"])
+            import shotgun_api3
+            # Connect to SG
+            sg = shotgun_api3.Shotgun(os.environ["SERVER_PATH"], os.environ["SCRIPT_NAME"], os.environ["SCRIPT_KEY"])
+            print "Connected to Shotgun via api...\n"
+        except:
+            import shotgun_api3
+            sg = shotgun_api3.Shotgun(os.environ["SHOTGUN_API_SERVER_PATH"], os.environ["SHOTGUN_API_SCRIPT_NAME"], os.environ["SHOTGUN_API_SCRIPT_KEY"])
+            print "Connected to Shotgun via api...\n"
 
     ########################################################################################################
     print "Loading Functions"
@@ -336,3 +340,5 @@ def update():
     except Exception as e:
         print "step"
         print e
+
+#update()
