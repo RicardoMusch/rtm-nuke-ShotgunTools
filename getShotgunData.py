@@ -17,9 +17,9 @@ def update():
         sg = current_engine.shotgun
         print "Connected to Shotgun via current SGTK engine...\n"
     except:
+        sys.path.append(os.environ["SHOTGUN_API3"])
         try:
             import sg_connection
-            sys.path.append(os.environ["SHOTGUN_API3"])
             import shotgun_api3
             # Connect to SG
             sg = shotgun_api3.Shotgun(os.environ["SERVER_PATH"], os.environ["SCRIPT_NAME"], os.environ["SCRIPT_KEY"])
