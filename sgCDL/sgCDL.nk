@@ -1,0 +1,66 @@
+set cut_paste_input [stack 0]
+version 11.3 v6
+push $cut_paste_input
+Group {
+ name sgCDL
+ selected true
+ xpos -139
+ ypos -39
+ addUserKnob {20 User l sgOCIOCDLTransform}
+ addUserKnob {26 lbl_usage l Usage: T "Loads CDL values for the connected node \nfrom Shotgun (if available).\n\nIf left unconnected it allows you to load \nCDL values from another shot in Shotgun."}
+ addUserKnob {26 ""}
+ addUserKnob {22 update l "Update CDL from Shotgun" T "import sgCDL\nsgCDL.getCDLFromShotgun()" +STARTLINE}
+ addUserKnob {26 lbl_context l "    Context:    " -STARTLINE T TW2_unl035_0005}
+ addUserKnob {26 ""}
+ addUserKnob {41 channels T OCIOCDLTransform1.channels}
+ addUserKnob {41 slope T OCIOCDLTransform1.slope}
+ addUserKnob {41 offset T OCIOCDLTransform1.offset}
+ addUserKnob {41 power T OCIOCDLTransform1.power}
+ addUserKnob {41 saturation T OCIOCDLTransform1.saturation}
+ addUserKnob {41 direction T OCIOCDLTransform1.direction}
+ addUserKnob {41 working_space l "working space" T OCIOCDLTransform1.working_space}
+ addUserKnob {26 ""}
+ addUserKnob {41 read_from_file l "read from file" T OCIOCDLTransform1.read_from_file}
+ addUserKnob {41 file T OCIOCDLTransform1.file}
+ addUserKnob {41 reload -STARTLINE T OCIOCDLTransform1.reload}
+ addUserKnob {41 cccid T OCIOCDLTransform1.cccid}
+ addUserKnob {41 select_cccid l "select cccid" -STARTLINE T OCIOCDLTransform1.select_cccid}
+ addUserKnob {26 ""}
+ addUserKnob {41 export_cc l "export grade as .cc" T OCIOCDLTransform1.export_cc}
+ addUserKnob {26 ""}
+ addUserKnob {41 maskChannelInput l mask -STARTLINE T OCIOCDLTransform1.maskChannelInput}
+ addUserKnob {41 inject -STARTLINE T OCIOCDLTransform1.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T OCIOCDLTransform1.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T OCIOCDLTransform1.fringe}
+ addUserKnob {41 unpremult l "(un)premult by" T OCIOCDLTransform1.unpremult}
+ addUserKnob {41 invert_unpremult l invert -STARTLINE T OCIOCDLTransform1.invert_unpremult}
+ addUserKnob {41 mix T OCIOCDLTransform1.mix}
+ addUserKnob {26 ""}
+ addUserKnob {26 footer_credits l "Created by:" T "Ricardo Musch    |    "}
+ addUserKnob {22 btn_site l ricardo-musch.com -STARTLINE T "import webbrowser as wb\\nwb.open_new_tab('http://www.ricardo-musch.com')"}
+ addUserKnob {26 spacer l "    " -STARTLINE T "|    "}
+ addUserKnob {22 btn_github l Github -STARTLINE T "import webbrowser as wb\\nwb.open_new_tab('https://github.com/RicardoMusch/rtm-nuke-ShotgunTools')"}
+ addUserKnob {26 lbl_version l Version: T v0.1.0}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -284
+  ypos -116
+ }
+ OCIOCDLTransform {
+  slope {0.9848 0.9943 1.0475}
+  offset {-0.027 -0.0135 0.0035}
+  power {-0.027 -0.0135 0.0035}
+  saturation 0.9398
+  working_space AlexaV3LogC
+  name OCIOCDLTransform1
+  xpos -284
+  ypos -76
+ }
+ Output {
+  name Output1
+  xpos -284
+  ypos 24
+ }
+end_group

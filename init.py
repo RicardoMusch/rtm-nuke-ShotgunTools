@@ -1,6 +1,3 @@
-##########################################
-print " "
-print "Loading getShotgunData gizmo"
-##########################################
-
-import getShotgunData
+import nuke
+nuke.pluginAddPath("./getShotgunData")
+nuke.pluginAddPath("./sgCDL")

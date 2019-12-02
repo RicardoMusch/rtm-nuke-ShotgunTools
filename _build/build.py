@@ -6,7 +6,7 @@ new_version = raw_input("Version to Publish: ")
 app_root = os.path.dirname((os.path.dirname(__file__))).replace("\\", "/")
 app_name = os.path.basename(os.path.dirname(app_root).replace("_github",""))
 new_app_version_root = os.path.dirname(app_root)
-new_app_version_root = os.path.join(new_app_version_root,app_name+"_v"+new_version).replace("\\", "/")
+new_app_version_root = os.path.join(new_app_version_root,"v"+new_version).replace("\\", "/")
 
 
 #print "app_root:", app_root
